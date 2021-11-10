@@ -4,8 +4,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-const cssProd = [];
-const cssConfig = isDevelopment ? cssProd : cssProd;
 module.exports = {
     mode: isDevelopment ? 'development' : 'production',
     target: isDevelopment ? 'web' : 'browserslist',
@@ -24,8 +22,12 @@ module.exports = {
                 use: 'ts-loader',
             },
             {
-                test: /\.(css|scss)$/,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+                test: /\.(css)$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', "postcss-loader"]
+            },
+            {
+                test: /\.(s[ac]ss)$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', "postcss-loader", 'sass-loader']
             }
         ],
     },
@@ -51,7 +53,7 @@ module.exports = {
         extensions: ['.js', '.ts', '.tsx'],
         modules: ['.', 'node_modules']
     },
-    devtool: "source-map",
+    devtool: isDevelopment ? "source-map" : false,
     optimization: !isDevelopment ? {
         minimize: true,
         minimizer: [new TerserPlugin({
