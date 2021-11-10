@@ -4,13 +4,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
+const cssProd = [];
+const cssConfig = isDevelopment ? cssProd : cssProd;
 module.exports = {
     mode: isDevelopment ? 'development' : 'production',
     target: isDevelopment ? 'web' : 'browserslist',
-    devServer: {
-        port: 8000,
-        hot: true
-    },
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
@@ -21,23 +19,19 @@ module.exports = {
                 type: "asset/resource"
             },
             {
-                test: /\.[jt]sx?$/,
+                test: /\.tsx?$/,
                 exclude: /node_modules/,
-                use: [{loader: 'ts-loader'},],
+                use: 'ts-loader',
             },
             {
-                test: /\.s?css$/,
-                use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {publicPath: ""},
-                    },
-                    'css-loader',
-                    'postcss-loader',
-                    'sass-loader'
-                ]
+                test: /\.(css|scss)$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             }
         ],
+    },
+    devServer: {
+        port: 8000,
+        hot: true,
     },
     output: {
         filename: 'js/[name].js',
@@ -58,7 +52,7 @@ module.exports = {
         modules: ['.', 'node_modules']
     },
     devtool: "source-map",
-    optimization: {
+    optimization: !isDevelopment ? {
         minimize: true,
         minimizer: [new TerserPlugin({
             terserOptions: {
@@ -68,5 +62,5 @@ module.exports = {
             },
             extractComments: false,
         })],
-    },
+    } : {},
 };
