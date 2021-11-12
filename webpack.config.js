@@ -8,7 +8,8 @@ module.exports = {
     mode: isDevelopment ? 'development' : 'production',
     target: isDevelopment ? 'web' : 'browserslist',
     entry: {
-        app: path.join(__dirname, 'src', 'index.tsx')
+        frontend: path.resolve( __dirname, 'src', 'frontend.tsx' ),
+        backend: path.resolve( __dirname, 'src', 'backend.tsx' )
     },
     module: {
         rules: [
@@ -36,7 +37,7 @@ module.exports = {
         hot: true,
     },
     output: {
-        filename: 'js/[name].js',
+        filename: 'js/[name]_awake_quiz.js',
         path: path.resolve(__dirname, 'assets'),
         clean: true,
         assetModuleFilename: "images/[hash][ext][query]",
@@ -46,7 +47,7 @@ module.exports = {
             template: path.join(__dirname, 'src', 'index.html')
         }),
         new MiniCssExtractPlugin({
-            filename: "css/[name].css"
+            filename: "css/[name]_awake_quiz.css"
         }),
     ].filter(Boolean),
     resolve: {

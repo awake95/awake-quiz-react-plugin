@@ -1,9 +1,10 @@
 import React from 'react';
+import './app.scss'
 
 const App = () => {
     return (
         <div>
-            dfsfdsf
+            Backend
         </div>
     );
 };
