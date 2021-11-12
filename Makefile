@@ -1,4 +1,4 @@
-SLUG := $(shell composer show --self | head -n1 | awk -F'/' '{print $$2}')
+SLUG := $(shell composer show --self 2>/dev/null| head -n1 | awk -F'/' '{print $$2}')
 build:
 	mkdir -p $(SLUG)
 	composer install
