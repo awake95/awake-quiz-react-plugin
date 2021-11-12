@@ -1,6 +1,6 @@
 {
-  "name": "wetail/wptu-enabled-plugin-template-example",
-  "description": "WPTU-enabled plugin template/example",
+  "name": "awake/awakequizplugin",
+  "description": "Awake plugin template/example",
   "require": {
     "yahnis-elsts/plugin-update-checker": "^4.10"
   }
